@@ -3,6 +3,138 @@ import java.util.*;
 import java.util.Random;
 
 
+public class Slot {
+    int day;
+    int slot;
+    int quantity;
+    //Vaccine v=new Vaccine(String v_name, int doses, int gap);
+    String vname;
+    String h_id;
+//    Vaccine name;
+//    Hospital uniq_id;
+    public Slot(int day, int slot, int quantity, String vname, String h_id ){
+
+        this.vname=vname;
+        this.slot=slot;
+        this.quantity=quantity;
+        this.h_id=h_id;
+
+
+
+
+    }
+    public void add_slot(int day, int slot, int quantity, String vname, String h_id ){
+        System.out.println("Slot added for Hospital "+ h_id+ " for Day: "+day+", Available Quantity: "+quantity+"of Vaccine "+vname);
+        Main.main(null);
+    }
+
+
+}
+
+public class Vaccine {
+    String name;
+    int doses;
+    int gap;
+
+
+    public Vaccine(String v_name, int doses, int gap){
+        this.name=v_name;
+        this.doses=doses;
+        this.gap=gap;
+    }
+    public void add_vaccine(String v_name, int doses, int gap){
+        System.out.println("Vaccine Name:  "+ v_name);
+        System.out.println("Number of doses:  "+ doses);
+        System.out.println("Gap between doses:  "+gap);
+        System.out.println("Vaccine Name:  "+ v_name+"Number of doses:  "+ doses+"Gap between doses:  "+gap);
+        Main.main(null);
+    }
+
+}
+public class Hospital {
+    String name;
+    int pincode;
+    String n;
+    static ArrayList h_id=new ArrayList();
+    static ArrayList pcode=new ArrayList();
+    static ArrayList<Hospital> data = new ArrayList<Hospital>();
+    /////////////////////////////////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    static void hdata(String name_hospital, int pincode, String n ){
+        data.add(new Hospital(name_hospital, pincode, n));
+    }
+
+    public Hospital(String name_hospital, int pincode,String n){
+    this.name=name_hospital;
+    this.pincode=pincode;
+
+
+//    h_id.add(n);
+//    pcode.add(pincode);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    public void reg_hospital(String name,int pincode){
+        System.out.println(h_id);
+        System.out.println("Name of hospital: "+name);
+        System.out.println("Pincode: "+pincode);
+        System.out.println("Name of hospital: "+name+"Pincode: "+pincode+ "Unique ID : "+n);
+        Main.main(null);
+    }
+//    public void cr_slot(int ID ,int slots, )
+
+
+}
+public class Citizen {
+    static ArrayList ids=new ArrayList();
+
+    String name;
+    int age;  //no one under 18 allowed
+    int id;     // need 6 digits
+    String status;
+
+    ////////////////////////////////////////////////////////////////////
+
+    public Citizen(String name, int age, int id, String status) {
+        this.name=name;
+        this.age=age;
+        this.id=id;
+        this.status=status;
+        if (ids.contains(id)==true){
+            System.out.println("ID already present,please try again!");
+        }else {
+            ids.add(id);
+        }
+
+
+
+    }
+
+
+/////////////////////////////////////////////////////////////////////
+
+    void reg_citizen( String name, int age, int id, String status)
+    {
+
+
+        System.out.println("Citizen Name:"+ name);
+        System.out.println("Age:"+ age);
+        System.out.println("Unique Id:"+ id);
+        System.out.println("Citizen Name: "+ name+" ,Age:"+ age+",Unique Id: "+ id);
+
+        System.out.println(ids);
+        Main.main(null);
+
+
+
+
+    }
+
+
+}
 
 
 public class Main {
