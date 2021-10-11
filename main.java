@@ -7,29 +7,43 @@ public class Slot {
     int day;
     int slot;
     int quantity;
+    static ArrayList<Slot> sdata = new ArrayList();
     //Vaccine v=new Vaccine(String v_name, int doses, int gap);
     String vname;
     String h_id;
-//    Vaccine name;
-//    Hospital uniq_id;
+
     public Slot(int day, int slot, int quantity, String vname, String h_id ){
 
         this.vname=vname;
         this.slot=slot;
         this.quantity=quantity;
         this.h_id=h_id;
-
-
-
-
     }
     public void add_slot(int day, int slot, int quantity, String vname, String h_id ){
-        System.out.println("Slot added for Hospital "+ h_id+ " for Day: "+day+", Available Quantity: "+quantity+"of Vaccine "+vname);
+        System.out.println("Slot added for Hospital "+ h_id+ " for Day: "+day+", Available Quantity: "+quantity+" of Vaccine "+vname);
+        sdata.add(new Slot(day, slot,  quantity, vname,  h_id));
         Main.main(null);
     }
+    static void vaccine_search(String vname) {
+        Hospital h_id = null;
+        for (int i = 0; i < Hospital.data.size(); i++) {
+            if (    sdata.get(i).vname == vname) {
+                h_id = Hospital.data.get(i);
+            } else {
+                System.out.println("No Vaccines by this name");
+                Main.main(null);
+            }
+
+        }
+        System.out.println(h_id);
+    }
+//    public static void add_hospital(String h_id){
+//
+//    }
 
 
 }
+package com.company;
 
 public class Vaccine {
     String name;
@@ -51,41 +65,46 @@ public class Vaccine {
     }
 
 }
+
 public class Hospital {
     String name;
     int pincode;
     String n;
-    static ArrayList h_id=new ArrayList();
-    static ArrayList pcode=new ArrayList();
-    static ArrayList<Hospital> data = new ArrayList<Hospital>();
-    /////////////////////////////////////////////////////////////////////////////////////
+    static ArrayList<Hospital> data = new ArrayList();
+
+    public Hospital(String name_hospital, int pincode, String n) {
+        this.name = name_hospital;
+        this.pincode = pincode;
+        this.n=n;
+    }
 
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    static void hdata(String name_hospital, int pincode, String n ){
+    public void reg_hospital(String name, int pincode, String n) {
+        //System.out.println(data);
+        System.out.println("Name of hospital: " + name);
+        System.out.println("Pincode: " + pincode);
+        System.out.println("Name of hospital: " + name + "Pincode: " + pincode + "Unique ID : " + n);
+        String name_hospital = name;
         data.add(new Hospital(name_hospital, pincode, n));
-    }
-
-    public Hospital(String name_hospital, int pincode,String n){
-    this.name=name_hospital;
-    this.pincode=pincode;
-
-
-//    h_id.add(n);
-//    pcode.add(pincode);
-    }
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    public void reg_hospital(String name,int pincode){
-        System.out.println(h_id);
-        System.out.println("Name of hospital: "+name);
-        System.out.println("Pincode: "+pincode);
-        System.out.println("Name of hospital: "+name+"Pincode: "+pincode+ "Unique ID : "+n);
         Main.main(null);
     }
-//    public void cr_slot(int ID ,int slots, )
+    static String hid;
+    static void pincode_search(int pincode) {
+        Hospital h_id = null;
 
+        for (int i = 0; i < Hospital.data.size(); i++) {
+            if (data.get(i).pincode == pincode) {
+                h_id = Hospital.data.get(i);
+                hid=Hospital.data.get(i).n;
+                System.out.println(hid);
+            } else {
+                System.out.println("No Vaccination in this area");
+                Main.main(null);
+            }
+
+        }
+        System.out.println(h_id);;
+    }
 
 }
 public class Citizen {
@@ -137,6 +156,13 @@ public class Citizen {
 }
 
 
+package com.company;
+import java.util.*;
+import java.util.Random;
+
+
+
+
 public class Main {
 
     public static <string> void main(String[] args) {
@@ -162,8 +188,12 @@ public class Main {
                     Scanner sc3 = new Scanner(System.in);
                     System.out.println("Vaccine name: ");
                     String v_name= sc3.nextLine();
+                    System.out.println("Number of doses");
                     int doses=scan.nextInt();
+                    System.out.println("Gap between doses");
                     int gap=scan.nextInt();
+                    Vaccine v=new Vaccine(v_name, doses,  gap);
+                    v.add_vaccine(v_name, doses,  gap);
 
                     break;
 
@@ -190,7 +220,7 @@ public class Main {
 
 
                     Hospital h = new Hospital(name_hospital,pincode,n);
-                    h.reg_hospital(name_hospital,pincode);
+                    h.reg_hospital(name_hospital,pincode,n);
 
                     break;
 
@@ -235,6 +265,10 @@ public class Main {
                         int slot=scan.nextInt();
                         System.out.println("Enter Day number");
                         int day=scan.nextInt();
+                        if (day>7){
+                            System.out.println("Incorrect input");
+                            System.exit(0);
+                        }
                         System.out.println("Enter Quantity");
                         int quantity=scan.nextInt();
 
@@ -263,25 +297,70 @@ public class Main {
                         break;
 
 
-                        case 5:
+                case 5:
+
                             System.out.println("Enter Unique Patient ID: ");
-                            
+                            int pid= scan.nextInt();
+                            int len_pid = String.valueOf(pid).length();
+                            if(len_pid!= 3) {
+                            System.out.println("Incorrect ID");
+                            System.exit(0);}
+                            System.out.println("1. Search By area");
+                            System.out.println("2. Search by vaccine");
+                            System.out.println("3. Exit");
+                            int choice = scan.nextInt();
+                            if (choice==1){
+                                System.out.println("Enter pincode");
+                                pincode=scan.nextInt();
+                                len_p = String.valueOf(pincode).length();
+                                if (len_p != 6) {
+                                    System.out.println("Incorrect pincode");
+                                    System.exit(03);
+                                }else{
+                                    Hospital.pincode_search(pincode);
+                                }
+//                                System.out.println("Enter hospital ID");
+//                                Scanner s6=new Scanner(System.in);
+//                                String idh=s6.nextLine();
+//                                Hospital.id_search(idh,pincode);
 
+                            }else if(choice==2){
+                                System.out.println("Enter Vaccine Name:");
+                                Scanner sc5=new Scanner(System.in);
+                                v_name=sc5.nextLine();
+                                Slot.vaccine_search(v_name);
 
+                            }else if (choice==3){
+                                System.exit(0);
+                            }
 
-
-
-
-
-                    break;
+                            break;
                 case 6:
+                    System.out.print("Hospital ID: ");
+                    h_id = scan.nextLine();
+
                     break;
                 case 7:
+                    System.out.print("Enter Patient ID: ");
+                    pid= scan.nextInt();
+                    
+
                     break;
                 case 8:
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid Input");
+
+
+            }
+
+
+
+
+    }
+}
+
 
 
             }
